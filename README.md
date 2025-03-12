@@ -5,7 +5,7 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 ##Build the Tracker App
 
 ##Scope and Features
-- Be able to add a habit that I want to track
+- Be able to add a habit I want to track
 - Be able to track the habit for the day
 - Be able to view the habits I've tracked, the history of the habit
 - Be able to set goals for the habit
