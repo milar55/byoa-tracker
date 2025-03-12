@@ -2,6 +2,29 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+##Build the Tracker App
+
+##Scope and Features
+- Be able to add a habit that I want to track
+- Be able to track the habit for the day
+- Be able to view the habits I've tracked, the history of the habit
+- Be able to set goals for the habit
+- Be able to view the goals I've set
+- View the streak of the habit in a graph
+- Be able to edit/delete the habit
+
+## Tech Stack
+- React Native
+- Expo
+- Typescript
+- Firebase
+
+## Advanced Features
+- Push Notifications
+- Add habits to different categories
+- Support different habit frequencies (daily, weekly, monthly)
+
+
 ## Get started
 
 1. Install dependencies
