@@ -1,74 +1,115 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import React, { useState } from 'react';
+import { StyleSheet, FlatList, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { ThemedText } from '../../components/ThemedText';
+import { ThemedView } from '../../components/ThemedView';
+import HabitItem from '../../components/HabitItem';
+import AddHabitForm from '../../components/AddHabitForm';
+import { useHabits } from '../../context/HabitContext';
 
 export default function HomeScreen() {
+  const { habits, loading } = useHabits();
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+
+  if (loading) {
+    return (
+      <ThemedView style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007AFF" />
+        <ThemedText style={styles.loadingText}>Loading habits...</ThemedText>
+      </ThemedView>
+    );
+  }
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+    <ThemedView style={styles.container}>
+      <View style={styles.header}>
+        <ThemedText style={styles.title}>My Habits</ThemedText>
+        <TouchableOpacity 
+          style={styles.addButton}
+          onPress={() => setIsAddModalVisible(true)}
+        >
+          <Ionicons name="add" size={24} color="white" />
+        </TouchableOpacity>
+      </View>
+
+      {habits.length === 0 ? (
+        <View style={styles.emptyContainer}>
+          <Ionicons name="calendar-outline" size={64} color="#ccc" />
+          <ThemedText style={styles.emptyText}>
+            You don't have any habits yet
+          </ThemedText>
+          <ThemedText style={styles.emptySubtext}>
+            Tap the + button to add your first habit
+          </ThemedText>
+        </View>
+      ) : (
+        <FlatList
+          data={habits}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <HabitItem habit={item} />}
+          contentContainerStyle={styles.listContent}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      )}
+
+      <AddHabitForm 
+        isVisible={isAddModalVisible}
+        onClose={() => setIsAddModalVisible(false)}
+      />
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+  addButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#007AFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  listContent: {
+    paddingBottom: 24,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 24,
+  },
+  emptyText: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  emptySubtext: {
+    fontSize: 16,
+    opacity: 0.7,
+    marginTop: 8,
+    textAlign: 'center',
   },
 });

@@ -1,29 +1,80 @@
-# Welcome to your Expo app 👋
+# Habit Tracker App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A simple habit tracking app built with React Native, Expo, TypeScript, and Firebase.
 
-##Build the Tracker App
+## Features
 
-##Scope and Features
-- Be able to add a habit I want to track
-- Be able to track the habit for the day
-- Be able to view the habits I've tracked, the history of the habit
-- Be able to set goals for the habit
-- Be able to view the goals I've set
-- View the streak of the habit in a graph
-- Be able to edit/delete the habit
+- Add habits with name, description, and frequency (daily, weekly, monthly)
+- Track habits by marking them as completed
+- View habit details and history
+- See statistics about habits and completion rates
+- Track streaks for habits
+- Real-time data sync with Firebase
 
 ## Tech Stack
+
 - React Native
 - Expo
-- Typescript
-- Firebase
+- TypeScript
+- Firebase (Firestore)
 
-## Advanced Features
+## Setup
+
+### Prerequisites
+
+- Node.js (v14 or newer)
+- npm or yarn
+- Expo CLI (`npm install -g expo-cli`)
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Firebase Setup
+
+1. Create a Firebase project at [https://console.firebase.google.com/](https://console.firebase.google.com/)
+2. Add a new web app to your Firebase project
+3. Enable Firestore in your Firebase project
+4. Copy your Firebase configuration
+5. Update the `tracker/config/firebase.ts` file with your Firebase configuration:
+
+```typescript
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+```
+
+### Running the App
+
+```bash
+npx expo start
+```
+
+## Project Structure
+
+- `app/`: Contains all the screens and navigation setup (Expo Router)
+- `components/`: Reusable UI components
+- `context/`: Context providers for state management
+- `types/`: TypeScript type definitions
+- `config/`: Configuration files (Firebase, etc.)
+
+## Future Enhancements
+
 - Push Notifications
 - Add habits to different categories
-- Support different habit frequencies (daily, weekly, monthly)
-
+- More detailed statistics and graphs
+- Goal setting for habits
+- User authentication
+- Sharing and social features
 
 ## Get started
 
